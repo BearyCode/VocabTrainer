@@ -9,7 +9,7 @@ import UIKit
 
 class ViewController: UIViewController {
 	
-	// MARK: - Variables
+	// MARK: - Variables, Arrays
 	
 	private var wordsToLearn: Dictionary = [String:String]()
 	
@@ -208,6 +208,8 @@ class ViewController: UIViewController {
 	}
 	
 	private func emptyWordsToLearn() {
+		// once the user is finished, all correct and wrong answerd words can be seen, with the results button
+	
 		wordLabel.isHidden = true
 		answerTextField.isHidden = true
 		countLabel.isHidden = true
@@ -228,6 +230,9 @@ class ViewController: UIViewController {
 	// MARK: - @objc Functions
 	
 	@objc private func startButtonTapped() {
+		// After some words are added the use can start the practise with the start button
+		// If there are no words added, the practise can't start and the user gets an alert
+		
 		if wordsToLearn.isEmpty == false {
 			wordLabel.isHidden = false
 			correctLabel.isHidden = false
@@ -253,6 +258,8 @@ class ViewController: UIViewController {
 	}
 	
 	@objc private func stopButtonTapped() {
+		// The stop button pause the practise
+		
 		wordLabel.isHidden = true
 		correctLabel.isHidden = true
 		wrongLabel.isHidden = true
@@ -265,11 +272,12 @@ class ViewController: UIViewController {
 		answerTextField.isHidden = true
 		resultView.isHidden = true
 		
-		wordLabel.text = nil
 		countLabel.text = "Words left: \(wordsToLearn.count)"
 	}
 	
 	@objc private func addWord() {
+		// UIAlert with UITextFields to add words to practise
+		
 		let alert = UIAlertController(title: "New Word", message: "Add new word to practise", preferredStyle: .alert)
 		
 		var wordTextField = UITextField()
@@ -300,6 +308,8 @@ class ViewController: UIViewController {
 	}
 	
 	@objc private func resultsButtonTapped() {
+		// This fucntion shows which words were answered correctly and which incorrectly
+		
 		resultsButton.isEnabled = false
 		resultView.isHidden = false
 		resultView.configureText(correctArray: correctAnswer, wrongArray: wrongAnswer)
@@ -310,6 +320,8 @@ class ViewController: UIViewController {
 
 extension ViewController: UITextFieldDelegate {
 	func textFieldShouldReturn(_ textField: UITextField) -> Bool {
+		// After the "done" key on the keyboard is pressed, it checks if the answer is correct.
+		
 		self.view.endEditing(true)
 		
 		answerTextField.resignFirstResponder()
